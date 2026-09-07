@@ -206,6 +206,8 @@ body{padding-bottom:110px}
   
   transition:transform .6s cubic-bezier(.22,1.3,.4,1),opacity .45s ease}
 .orbit.closed .orb{opacity:0;pointer-events:none}
+/* betöltéskor semmi ne csússzon be: az első kirajzolásig nincs átmenet */
+.orbit.noanim .orb,.orbit.noanim .orbit-core{transition:none!important}
 @media (max-width:900px){.orbit{height:min(58vh,430px)}}
 @media (max-width:560px){
   .orbit .orb{width:78px;height:78px}
@@ -578,8 +580,8 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:var(--ink-mid);font
     <div class="wrap">
 
 
-      <div class="orbit" id="orbit">
-        <button type="button" class="orbit-core" id="orbit-core" aria-expanded="true">oi</button>
+      <div class="orbit closed noanim" id="orbit">
+        <button type="button" class="orbit-core closed" id="orbit-core" aria-expanded="false">oi</button>
         <button class="pkg-toggle orb" type="button" id="pkg-toggle" data-i18n-title="price_tag" aria-label="Packages">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l9-4.5 9 4.5"/><path d="M3 8.5v9l9 4.5 9-4.5v-9"/><path d="M3 8.5l9 4.5 9-4.5"/><path d="M12 13v9"/></svg>
         </button>
@@ -1146,17 +1148,22 @@ if(callbackForm){
   }
   window.updateDetailLabel=updateDetailLabel;
 
+  function valaszt(btn){
+    if(!btn) return;
+    callbackForm.querySelectorAll(".channel-btn").forEach(b=>b.classList.remove("selected"));
+    btn.classList.add("selected");
+    channel=btn.getAttribute("data-channel");
+    channelKind=btn.getAttribute("data-kind");
+    updateDetailLabel();
+    detailField.classList.add("show");
+    noteEl.textContent="";
+  }
   callbackForm.querySelectorAll(".channel-btn").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      callbackForm.querySelectorAll(".channel-btn").forEach(b=>b.classList.remove("selected"));
-      btn.classList.add("selected");
-      channel=btn.getAttribute("data-channel");
-      channelKind=btn.getAttribute("data-kind");
-      updateDetailLabel();
-      detailField.classList.add("show");
-      noteEl.textContent="";
-    });
+    btn.addEventListener("click",()=>valaszt(btn));
   });
+  /* alapértelmezés: e-mail — nyitáskor már ki van választva és látszik a mező */
+  const alapCsatorna=()=>valaszt(callbackForm.querySelector('.channel-btn[data-channel="email"]'));
+  alapCsatorna();
 
   /* a csomagbuborékból érkező választás — megjelenik a fejlécben és belekerül a levélbe */
   /* mire érdeklődik: csomagbuborékból vagy az oktatás panelről érkezett-e.
@@ -1169,6 +1176,7 @@ if(callbackForm){
 
   /* minden megnyitáskor tiszta űrlap — beküldés után is lehessen újra írni */
   window.resetCallbackForm=()=>{
+    alapCsatorna();
     document.getElementById("callback-form-wrap").style.display="";
     document.getElementById("callback-success").classList.remove("show");
     noteEl.textContent="";
@@ -1639,7 +1647,7 @@ if(callbackForm){
   if(!orbit||!core) return;
   const orbs=[...orbit.querySelectorAll(".orb")];
   const reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let csukva=false;
+  let csukva=true;                 /* alapértelmezés: minden beszippantva */
 
   function elhelyez(){
     /* a pálya annyi helyet kap, amennyi a fejléc és az alsó sáv között tényleg marad */
@@ -1690,7 +1698,13 @@ if(callbackForm){
   }
   core.addEventListener("click",valt);
   addEventListener("resize",elhelyez);
+  /* a zárt állapot a HTML-ben van; itt csak kiszámoljuk a helyeket,
+     majd két képkocka után engedjük vissza az animációt */
   elhelyez();
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    orbit.classList.remove("noanim");
+    orbs.forEach((el,i)=>{ el.style.transitionDelay=((orbs.length-1-i)*70)+"ms"; });
+  }));
   window.orbitToggle=valt;
 })();
 
