@@ -830,8 +830,8 @@
         </button>
 <div class="shop-brands" id="shop-brands">
   <button type="button" class="shop-brand nfc" id="brand-nfc" aria-label="NFC cards" data-i18n-aria="brand_nfc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10.3"/><path d="M7.6 8.4a6.4 6.4 0 0 1 8.8 0M9.4 10.5a3.6 3.6 0 0 1 5.2 0"/><text x="12" y="17.6" text-anchor="middle" font-size="5.4" font-weight="800" fill="currentColor" stroke="none" font-family="Inter,system-ui,sans-serif">NFC</text></svg><small data-i18n="brand_nfc">NFC cards</small></button>
-  <button type="button" class="shop-brand" aria-label="Topps — coming soon" data-i18n-aria="brand_topps"><img src="képek/topps-logo.png" alt="" width="527" height="240"><small data-i18n="soon">Coming soon</small></button>
-  <button type="button" class="shop-brand" aria-label="Pokémon TCG — coming soon" data-i18n-aria="brand_poke"><img src="képek/pokemonshop-logo.png" alt="" width="419" height="240"><small data-i18n="soon">Coming soon</small></button>
+  <button type="button" class="shop-brand" aria-label="Topps — coming soon" data-i18n-aria="brand_topps"><img src="kepek/topps-logo.png" alt="" width="527" height="240"><small data-i18n="soon">Coming soon</small></button>
+  <button type="button" class="shop-brand" aria-label="Pokémon TCG — coming soon" data-i18n-aria="brand_poke"><img src="kepek/pokemonshop-logo.png" alt="" width="419" height="240"><small data-i18n="soon">Coming soon</small></button>
 </div>
 <div class="shop-panel" id="shop-panel" aria-hidden="true">
   <div class="shop-hd">
@@ -895,7 +895,7 @@
 <div class="iwrap" id="iwrap">
   <div class="ipanel" id="ipanel" role="dialog" aria-modal="false" aria-labelledby="ititle" aria-hidden="true">
     <button class="cclose" id="iclose" type="button" aria-label="Close" data-i18n-aria="close">×</button>
-    <span class="iphoto"><img src="profilkép/profilkep.jpg" alt="Olasz István" width="768" height="1024"></span>
+    <span class="iphoto"><img src="profilkep/profilkep.jpg" alt="Olasz István" width="768" height="1024"></span>
     <div class="itext">
       <div class="ieyebrow" data-i18n="intro_eyebrow">About me</div>
       <h2 id="ititle"><b data-i18n="intro_hi1">Hi! I'm István,</b><span data-i18n="intro_hi2">the founder of oiSystem.</span></h2>
@@ -2072,7 +2072,7 @@ window.OI_REFIMG = {
     var t=T();
     [].forEach.call(panel.querySelectorAll('.shop-tabs button'),function(b){ b.setAttribute('aria-selected',String(b.dataset.g===grp)); });
     grid.innerHTML=P[grp].map(function(x){
-      return '<div class="shop-card"><img src="képek/nfc/'+x[0]+'.webp" alt="" loading="lazy"><div class="bd"><b>'+(t[x[1]]||'')+'</b><small>'+(t[x[2]]||'')+'</small>'+
+      return '<div class="shop-card"><img src="kepek/nfc/'+x[0]+'.webp" alt="" loading="lazy"><div class="bd"><b>'+(t[x[1]]||'')+'</b><small>'+(t[x[2]]||'')+'</small>'+
         '<button type="button" data-k="'+x[1]+'">'+t.shop_ask+'</button></div></div>';
     }).join('');
   }
@@ -2205,7 +2205,7 @@ window.OI_REFIMG = {
       } else {
         var r=ajanlat();
         box.innerHTML='<div class="shop-wiz-hd"><span class="st">'+l.res+'</span><button type="button" class="x" data-mind>'+l.mind+'</button></div>'+
-          '<div class="shop-wiz-res"><img src="képek/nfc/'+r.fo[0]+'.webp" alt="" loading="lazy">'+
+          '<div class="shop-wiz-res"><img src="kepek/nfc/'+r.fo[0]+'.webp" alt="" loading="lazy">'+
           '<div class="txt"><b>'+(t[r.fo[1]]||'')+'</b><small>'+(t[r.fo[2]]||'')+'</small>'+
           '<div class="why">'+r.ok+(r.tipp?' '+r.tipp:'')+'</div>'+
           '<small>'+l.also+' <b>'+(t[r.mas[1]]||'')+'</b></small>'+
@@ -2239,9 +2239,9 @@ window.OI_REFIMG = {
     window.renderShopWiz();
   })();
 
-  /* „Hogyan működik?”: ha a képek/nfc/how-it-works.mp4 létezik, megjelenik a buborék;
+  /* „Hogyan működik?”: ha a kepek/nfc/how-it-works.mp4 létezik, megjelenik a buborék;
      kattintásra a közös videólejátszóban indul (némán, az elejéről) */
-  var how=$('shop-how'), HOWV='képek/nfc/how-it-works.mp4', vanVideo=false;
+  var how=$('shop-how'), HOWV='kepek/nfc/how-it-works.mp4', vanVideo=false;
   var probe=document.createElement('video'); probe.preload='metadata'; probe.muted=true;
   probe.onloadedmetadata=function(){ vanVideo=true; how.hidden=false; };
   probe.src=HOWV;
