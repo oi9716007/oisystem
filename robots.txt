@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://oi9716007.github.io/oisystem/sitemap.xml
